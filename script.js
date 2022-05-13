@@ -20,10 +20,20 @@ fetch(coordinateUrl)
       var lat = data[0].lat 
       var long = data[0].lon
       console.log(lat, long);
+
+      var oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=hourly,minutely&appid=" + APIkey; 
       
-      //fetch(url + lat + long + awoiegjawoefijaweo)
+      console.log(oneCallUrl); 
       
-  }); 
+      fetch(oneCallUrl) 
+        .then(function (response) {
+          return response.json()  
+      })
+      .then(function (data) {
+        console.log(data); 
+      })
+    }
+  ); 
 
 
 }
