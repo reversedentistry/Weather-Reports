@@ -62,7 +62,9 @@ function displayCityName(name) {
 function addSearchHistory(name) {
   // Add user search to history list if something is found 
   let userSearchHistory = document.createElement("li"); 
-  userSearchHistory.textContent = name; 
+  let historyBtn = document.createElement("button"); 
+  historyBtn.textContent = name; 
+  userSearchHistory.append(historyBtn); 
   searchHistory.append(userSearchHistory); 
 
 }
