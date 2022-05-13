@@ -18,6 +18,9 @@ function callWeatherApi() {
 
   fetch(coordinateUrl)
     .then(function (response) {
+      if (!response.ok) {
+        return; 
+      }
       return response.json();
     })
     .then(function (data) {
@@ -86,6 +89,10 @@ function printCurrent(currentWeatherResult) {
   currentTemp.textContent = currentWeatherResult.current.temp 
   currentWeatherBody.append(currentTemp); 
   console.log(currentTemp); 
+
+  // preliminary five day forecast draft 
+  for (let i = 0; i < currentWeatherResult.daily.length; i++) {
+    
+  }
 }
 
-// function printFiveDay()
