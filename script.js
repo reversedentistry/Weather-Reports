@@ -18,6 +18,7 @@ function callWeatherApi() {
 
   fetch(coordinateUrl)
     .then(function (response) {
+      // Add modal to alert user if city name cannot be found 
       if (!response.ok) {
         return; 
       }
@@ -29,6 +30,7 @@ function callWeatherApi() {
       let long = data[0].lon
       let cityName = data[0].name 
       displayCityName(cityName);
+      addSearchHistory(cityName); 
 
       let oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&exclude=hourly,minutely&appid=" + APIkey;
 
@@ -40,17 +42,12 @@ function callWeatherApi() {
         })
         .then(function (data) {
           // display results on page SOMEHOW
-          printCurrent(data);
-          // printFiveDay(data)??????; 
+          printResults(data);
+          
         })
-    }
-       
+    }  
     );
-    // Add user search to history list if something is found 
-    let userSearchHistory = document.createElement("li"); 
-    userSearchHistory.textContent = userSearch; 
-    searchHistory.append(userSearchHistory); 
-
+    
 }
 
 function displayCityName(name) {
@@ -62,7 +59,15 @@ function displayCityName(name) {
   currentWeatherBody.append(cityNameEl);  
 }
 
-function printCurrent(currentWeatherResult) {
+function addSearchHistory(name) {
+  // Add user search to history list if something is found 
+  let userSearchHistory = document.createElement("li"); 
+  userSearchHistory.textContent = name; 
+  searchHistory.append(userSearchHistory); 
+
+}
+
+function printResults(currentWeatherResult) {
   console.log(currentWeatherResult);
   
   let currentTemp = document.createElement("p"); 
