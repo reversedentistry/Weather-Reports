@@ -1,6 +1,7 @@
 var APIkey = "cc11cb432484c7170f84edd3a05552d8"; 
 
 var searchBtn = document.querySelector("#search-btn"); 
+var currentWeatherCard = document.querySelector("#current-weather"); 
 
 searchBtn.addEventListener("click", callWeatherApi); 
 
@@ -31,9 +32,15 @@ fetch(coordinateUrl)
       })
       .then(function (data) {
         console.log(data); 
+        // display results on page
       })
     }
   ); 
 
+}
 
+function printResults() {
+  let currentWeather = document.createElement("div"); 
+  currentWeather.classList.add("card-body"); 
+  currentWeather.append(currentWeatherCard)
 }
