@@ -58,14 +58,14 @@ function displayCityName(name) {
 function addSearchHistory(name) {
   // Add user search to history list if something is found 
   let userSearchHistory = document.createElement("li");
-  userSearchHistory.classList.add("list-group-item"); 
+  userSearchHistory.classList.add("list-group-item");
   let historyBtn = document.createElement("button");
   historyBtn.textContent = name;
   historyBtn.classList.add("history-btn", "btn", "btn-danger");
   userSearchHistory.append(historyBtn);
   searchHistory.append(userSearchHistory);
 
-}; 
+};
 
 
 
@@ -90,31 +90,44 @@ function printResults(currentWeatherResult) {
 
   currentWeatherBody.append(currentTemp, currentWind, currentHumidity, currentUvi);
 
-  let fiveDayTitle = document.createElement("h3"); 
-  fiveDayTitle.textContent = "5-Day Forecast"; 
-  fiveDayForecast.append(fiveDayTitle); 
+  let fiveDayTitle = document.createElement("h5");
+  fiveDayTitle.classList.add("card-title"); 
+  fiveDayTitle.textContent = "5-Day Forecast";
+  fiveDayForecast.append(fiveDayTitle);
+  console.log(fiveDayTitle)
 
-  // preliminary five day forecast draft 
+  let forecastRow = document.createElement("div"); 
+  forecastRow.classList.add("row", "justify-content-evenly");
+  fiveDayForecast.append(forecastRow);
+
+
   for (let i = 0; i < 5; i++) {
-    let forecastEl = document.createElement("div"); 
-    forecastEl.classList.add("card"); 
-    let cardBody = document.createElement("div"); 
-    cardBody.classList.add("card-body"); 
-    let cardDate = document.createElement("h5"); 
-    cardDate.textContent = "Date"; 
-    cardDate.classList.add("card-title"); 
+    forecastDiv = document.createElement("div"); 
+    forecastDiv.classList.add("col-lg-2");
+    let forecastEl = document.createElement("div");
+    forecastEl.classList.add("card");
+    let cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+    let cardDate = document.createElement("h5");
+    cardDate.textContent = "Date";
+    cardDate.classList.add("card-title");
 
-    let cardTemp = document.createElement("p"); 
-    cardTemp.textContent = currentWeatherResult.daily[i].temp.day + " F"; 
-    cardTemp.classList.add("card-text"); 
+    let cardTemp = document.createElement("p");
+    cardTemp.textContent = currentWeatherResult.daily[i].temp.day + " F";
+    cardTemp.classList.add("card-text");
 
-    let cardWind = document.createElement("p"); 
-    cardWind.textContent = currentWeatherResult.daily[i].wind_speed + " mph"; 
+    let cardWind = document.createElement("p");
+    cardWind.textContent = currentWeatherResult.daily[i].wind_speed + " mph";
     cardWind.classList.add("card-text");
 
-    let cardHumidity = document.createElement("p"); 
-    cardHumidity.textContent = currentWeatherResult.daily[i].humidity + "%"; 
+    let cardHumidity = document.createElement("p");
+    cardHumidity.textContent = currentWeatherResult.daily[i].humidity + "%";
     cardHumidity.classList.add("card-text");
-  }
-}
 
+    cardBody.append(cardDate, cardTemp, cardWind, cardHumidity);
+    forecastEl.append(cardBody);
+    forecastDiv.append(forecastEl);
+    forecastRow.append(forecastDiv);
+    // }
+  }
+};
