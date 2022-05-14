@@ -44,7 +44,7 @@ function callWeatherApi() {
     }
     );
 
-}
+};
 
 function displayCityName(name) {
   currentWeatherBody.innerHTML = "";
@@ -53,18 +53,19 @@ function displayCityName(name) {
   cityNameEl.textContent = name;
   console.log(cityNameEl)
   currentWeatherBody.append(cityNameEl);
-}
+};
 
 function addSearchHistory(name) {
   // Add user search to history list if something is found 
   let userSearchHistory = document.createElement("li");
+  userSearchHistory.classList.add("list-group-item"); 
   let historyBtn = document.createElement("button");
   historyBtn.textContent = name;
-  historyBtn.classList.add("history-btn"); 
+  historyBtn.classList.add("history-btn", "btn", "btn-danger");
   userSearchHistory.append(historyBtn);
   searchHistory.append(userSearchHistory);
 
-}
+}; 
 
 
 
@@ -73,33 +74,47 @@ function printResults(currentWeatherResult) {
 
   let currentTemp = document.createElement("p");
   currentTemp.classList.add("card-text");
-  currentTemp.textContent = currentWeatherResult.current.temp + " F"; 
-  
-  console.log(currentTemp);
+  currentTemp.textContent = "Temp: " + currentWeatherResult.current.temp + " F";
 
   let currentWind = document.createElement("p");
   currentWind.classList.add("card-text");
-  currentWind.textContent = currentWeatherResult.current.wind_speed + " mph"; 
-  
-  console.log(currentWind);
+  currentWind.textContent = "Wind: " + currentWeatherResult.current.wind_speed + " mph";
 
   let currentHumidity = document.createElement("p");
   currentHumidity.classList.add("card-text");
-  currentHumidity.textContent = currentWeatherResult.current.humidity + "%"
-  
-  console.log(currentHumidity);
+  currentHumidity.textContent = "Humidity: " + currentWeatherResult.current.humidity + "%"
 
   let currentUvi = document.createElement("p");
   currentUvi.classList.add("card-text");
-  currentUvi.textContent = currentWeatherResult.current.uvi; 
-  
-  console.log(currentUvi);
+  currentUvi.textContent = "UV Index: " + currentWeatherResult.current.uvi;
 
-  currentWeatherBody.append(currentTemp, currentWind, currentHumidity, currentUvi); 
+  currentWeatherBody.append(currentTemp, currentWind, currentHumidity, currentUvi);
+
+  let fiveDayTitle = document.createElement("h3"); 
+  fiveDayTitle.textContent = "5-Day Forecast"; 
+  fiveDayForecast.append(fiveDayTitle); 
 
   // preliminary five day forecast draft 
-  for (let i = 0; i < currentWeatherResult.daily.length; i++) {
+  for (let i = 0; i < 5; i++) {
+    let forecastEl = document.createElement("div"); 
+    forecastEl.classList.add("card"); 
+    let cardBody = document.createElement("div"); 
+    cardBody.classList.add("card-body"); 
+    let cardDate = document.createElement("h5"); 
+    cardDate.textContent = "Date"; 
+    cardDate.classList.add("card-title"); 
 
+    let cardTemp = document.createElement("p"); 
+    cardTemp.textContent = currentWeatherResult.daily[i].temp.day + " F"; 
+    cardTemp.classList.add("card-text"); 
+
+    let cardWind = document.createElement("p"); 
+    cardWind.textContent = currentWeatherResult.daily[i].wind_speed + " mph"; 
+    cardWind.classList.add("card-text");
+
+    let cardHumidity = document.createElement("p"); 
+    cardHumidity.textContent = currentWeatherResult.daily[i].humidity + "%"; 
+    cardHumidity.classList.add("card-text");
   }
 }
 
