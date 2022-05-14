@@ -65,9 +65,40 @@ function addSearchHistory(name) {
   userSearchHistory.append(historyBtn);
   searchHistory.append(userSearchHistory);
 
-};
+  historyBtn.addEventListener("click", function(event) {
+    event.preventDefault(); 
+    let btnClicked = event.target.textContent;
+    console.log(btnClicked); 
+    let coordinateUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + btnClicked + "&limit=1&appid=" + APIkey
 
+    fetch(coordinateUrl)
+    .then(function (response) {
+      if (!response.ok) {
+        return;
+      }
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      let lat = data[0].lat
+      let long = data[0].lon
+      let cityName = data[0].name
+      displayCityName(cityName);
+      
+      let oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&exclude=hourly,minutely&appid=" + APIkey;
 
+      fetch(oneCallUrl)
+        .then(function (response) {
+          return response.json()
+        })
+        .then(function (data) {
+          printResults(data);
+
+        })
+  
+  }); 
+
+})};
 
 function printResults(currentWeatherResult) {
   console.log(currentWeatherResult);
@@ -93,6 +124,7 @@ function printResults(currentWeatherResult) {
   let fiveDayTitle = document.createElement("h5");
   fiveDayTitle.classList.add("card-title"); 
   fiveDayTitle.textContent = "5-Day Forecast";
+  fiveDayForecast.innerHTML = "";
   fiveDayForecast.append(fiveDayTitle);
   console.log(fiveDayTitle)
 
@@ -113,21 +145,21 @@ function printResults(currentWeatherResult) {
     cardDate.classList.add("card-title");
 
     let cardTemp = document.createElement("p");
-    cardTemp.textContent = currentWeatherResult.daily[i].temp.day + " F";
+    cardTemp.textContent = currentWeatherResult.daily[i+1].temp.day + " F";
     cardTemp.classList.add("card-text");
 
     let cardWind = document.createElement("p");
-    cardWind.textContent = currentWeatherResult.daily[i].wind_speed + " mph";
+    cardWind.textContent = currentWeatherResult.daily[i+1].wind_speed + " mph";
     cardWind.classList.add("card-text");
 
     let cardHumidity = document.createElement("p");
-    cardHumidity.textContent = currentWeatherResult.daily[i].humidity + "%";
+    cardHumidity.textContent = currentWeatherResult.daily[i+1].humidity + "%";
     cardHumidity.classList.add("card-text");
 
     cardBody.append(cardDate, cardTemp, cardWind, cardHumidity);
     forecastEl.append(cardBody);
     forecastDiv.append(forecastEl);
     forecastRow.append(forecastDiv);
-    // }
+    
   }
 };
