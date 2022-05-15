@@ -120,7 +120,16 @@ function printResults(currentWeatherResult) {
 
   let currentUvi = document.createElement("p");
   currentUvi.classList.add("card-text");
-  currentUvi.textContent = "UV Index: " + currentWeatherResult.current.uvi;
+  currentUvi.innerHTML = "UV Index: <span id='uvi'>" + currentWeatherResult.current.uvi + "</span>"; 
+  let uviColor = document.querySelector("#uvi");
+  if (currentWeatherResult.current.uvi > 7) {
+    uviColor.classList.add("extreme");
+  } else if (currentWeatherResult.current.uvi > 3 || currentWeatherResult.current.uvi < 7) {
+    uviColor.classList.add("moderate");
+  } else {
+    uviColor.classList.add("low"); 
+  }
+
 
   currentWeatherBody.append(dateEl, weatherIconEl, currentTemp, currentWind, currentHumidity, currentUvi);
 
