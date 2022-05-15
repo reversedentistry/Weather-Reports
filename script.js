@@ -55,18 +55,14 @@ function displayCityName(name) {
 
 function addSearchHistory(name) {
   // Add user search to history list if something is found 
-  let userSearchHistory = document.createElement("li");
-  userSearchHistory.classList.add("list-group-item");
   let historyBtn = document.createElement("button");
   historyBtn.textContent = name;
   historyBtn.classList.add("history-btn", "btn", "btn-danger");
-  userSearchHistory.append(historyBtn);
-  searchHistory.append(userSearchHistory);
+  searchHistory.append(historyBtn);
 
   historyBtn.addEventListener("click", function (event) {
     event.preventDefault();
     let btnClicked = event.target.textContent;
-    console.log(btnClicked);
     let coordinateUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + btnClicked + "&limit=1&appid=" + APIkey
 
     fetch(coordinateUrl)
@@ -151,6 +147,10 @@ function printResults(currentWeatherResult) {
     cardDateEl.textContent = moment(cardDate, "X").format("M/D/YYYY");
     cardDateEl.classList.add("card-title");
 
+    let cardIcon = currentWeatherResult.daily[i + 1].weather[0].icon;
+    let cardIconEl = document.createElement("img"); 
+    cardIconEl.src = "https://openweathermap.org/img/wn/" + cardIcon + "@2x.png";
+
     let cardTemp = document.createElement("p");
     cardTemp.textContent = "Temp: " + currentWeatherResult.daily[i + 1].temp.day + " F";
     cardTemp.classList.add("card-text");
@@ -163,7 +163,7 @@ function printResults(currentWeatherResult) {
     cardHumidity.textContent = "Humidity: " + currentWeatherResult.daily[i + 1].humidity + "%";
     cardHumidity.classList.add("card-text");
 
-    cardBody.append(cardDateEl, cardTemp, cardWind, cardHumidity);
+    cardBody.append(cardDateEl, cardIconEl, cardTemp, cardWind, cardHumidity);
     forecastEl.append(cardBody);
     forecastDiv.append(forecastEl);
     forecastRow.append(forecastDiv);
