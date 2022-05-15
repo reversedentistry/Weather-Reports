@@ -67,7 +67,7 @@ function addSearchHistory(name) {
     event.preventDefault();
     let btnClicked = event.target.textContent;
     console.log(btnClicked);
-    let coordinateUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + btnClicked + "&limit=1&appid=" + APIkey
+    let coordinateUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + btnClicked + "&limit=1&appid=" + APIkey
 
     fetch(coordinateUrl)
       .then(function (response) {
@@ -108,7 +108,7 @@ function printResults(currentWeatherResult) {
   
   let weatherIcon = currentWeatherResult.current.weather[0].icon;
   let weatherIconEl = document.createElement("img");
-  weatherIconEl.src = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+  weatherIconEl.src = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
  
   let currentTemp = document.createElement("p");
   currentTemp.classList.add("card-text");
@@ -130,7 +130,7 @@ function printResults(currentWeatherResult) {
 
   let fiveDayTitle = document.createElement("h5");
   fiveDayTitle.classList.add("card-title");
-  fiveDayTitle.textContent = "5-Day Forecast";
+  fiveDayTitle.textContent = "5-Day Forecast:";
   fiveDayForecast.innerHTML = "";
   fiveDayForecast.append(fiveDayTitle);
   
