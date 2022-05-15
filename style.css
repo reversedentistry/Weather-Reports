@@ -14,3 +14,22 @@ h1 {
     background-color: rgba(183, 40, 94, 1);
     color: white;
 }
+
+span {
+    padding: 0.3rem 0.5rem;
+    border-radius: 10%;
+}
+
+.low {
+    background-color: rgb(62, 197, 55);
+    color: white;
+}
+
+.moderate {
+    background-color: yellow;
+}
+
+.extreme {
+    background-color: rgb(241, 74, 74);
+    color: white; 
+}
