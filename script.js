@@ -12,7 +12,7 @@ searchBtn.addEventListener("click", callWeatherApi);
 function callWeatherApi() {
   // Get lat + long coordinates first 
   let userSearch = document.querySelector("#location-search").value;
-  let coordinateUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + userSearch + "&limit=1&appid=" + APIkey;
+  let coordinateUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + userSearch + "&limit=1&appid=" + APIkey;
 
   fetch(coordinateUrl)
     .then(function (response) {
