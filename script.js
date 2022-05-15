@@ -20,7 +20,7 @@ function callWeatherApi() {
     })
     .then(function (data) {
       if (data.length == 0) {
-        return alert("Your search could not be found. Please try again."); 
+        return alert("Your search could not be found. Please try again.");
       }
       console.log(data);
       let lat = data[0].lat
@@ -50,7 +50,6 @@ function displayCityName(name) {
   let cityNameEl = document.createElement("h2");
   cityNameEl.classList.add("card-title");
   cityNameEl.textContent = name;
-  console.log(cityNameEl)
   currentWeatherBody.append(cityNameEl);
 };
 
@@ -64,42 +63,53 @@ function addSearchHistory(name) {
   userSearchHistory.append(historyBtn);
   searchHistory.append(userSearchHistory);
 
-  historyBtn.addEventListener("click", function(event) {
-    event.preventDefault(); 
+  historyBtn.addEventListener("click", function (event) {
+    event.preventDefault();
     let btnClicked = event.target.textContent;
-    console.log(btnClicked); 
+    console.log(btnClicked);
     let coordinateUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + btnClicked + "&limit=1&appid=" + APIkey
 
     fetch(coordinateUrl)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(data);
-      let lat = data[0].lat
-      let long = data[0].lon
-      let cityName = data[0].name
-      displayCityName(cityName);
-      // Unlike the API call triggered by search, we do not need to add this result into our history list  
-      
-      let oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&exclude=hourly,minutely&appid=" + APIkey;
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        let lat = data[0].lat
+        let long = data[0].lon
+        let cityName = data[0].name
+        displayCityName(cityName);
+        // Unlike the API call triggered by search, we do not need to add this result into our history list  
 
-      fetch(oneCallUrl)
-        .then(function (response) {
-          return response.json()
-        })
-        .then(function (data) {
-          printResults(data);
+        let oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&exclude=hourly,minutely&appid=" + APIkey;
 
-        })
-  
-  }); 
+        fetch(oneCallUrl)
+          .then(function (response) {
+            return response.json()
+          })
+          .then(function (data) {
+            printResults(data);
 
-})};
+          })
+
+      });
+
+  })
+};
 
 function printResults(currentWeatherResult) {
   console.log(currentWeatherResult);
 
+  let date = currentWeatherResult.current.dt; 
+  console.log(date); 
+  let dateEl = document.createElement("h3"); 
+  dateEl.textContent = moment(date).format("M/D/YYYY"); 
+  console.log(dateEl);
+  
+  let weatherIcon = currentWeatherResult.current.weather[0].icon;
+  let weatherIconEl = document.createElement("img");
+  weatherIconEl.src = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+ 
   let currentTemp = document.createElement("p");
   currentTemp.classList.add("card-text");
   currentTemp.textContent = "Temp: " + currentWeatherResult.current.temp + " F";
@@ -116,47 +126,47 @@ function printResults(currentWeatherResult) {
   currentUvi.classList.add("card-text");
   currentUvi.textContent = "UV Index: " + currentWeatherResult.current.uvi;
 
-  currentWeatherBody.append(currentTemp, currentWind, currentHumidity, currentUvi);
+  currentWeatherBody.append(dateEl, weatherIconEl, currentTemp, currentWind, currentHumidity, currentUvi);
 
   let fiveDayTitle = document.createElement("h5");
-  fiveDayTitle.classList.add("card-title"); 
+  fiveDayTitle.classList.add("card-title");
   fiveDayTitle.textContent = "5-Day Forecast";
   fiveDayForecast.innerHTML = "";
   fiveDayForecast.append(fiveDayTitle);
-  console.log(fiveDayTitle)
-
-  let forecastRow = document.createElement("div"); 
+  
+  let forecastRow = document.createElement("div");
   forecastRow.classList.add("row", "justify-content-evenly");
   fiveDayForecast.append(forecastRow);
 
 
   for (let i = 0; i < 5; i++) {
-    forecastDiv = document.createElement("div"); 
+    forecastDiv = document.createElement("div");
     forecastDiv.classList.add("col-lg-2");
     let forecastEl = document.createElement("div");
     forecastEl.classList.add("card");
     let cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
-    let cardDate = document.createElement("h5");
-    cardDate.textContent = "Date";
-    cardDate.classList.add("card-title");
+    let cardDate = currentWeatherResult.daily[i + 1].dt; 
+    let cardDateEl = document.createElement("h5");
+    cardDateEl.textContent = moment(cardDate).format("M/D/YYYY");
+    cardDateEl.classList.add("card-title");
 
     let cardTemp = document.createElement("p");
-    cardTemp.textContent = "Temp: " + currentWeatherResult.daily[i+1].temp.day + " F";
+    cardTemp.textContent = "Temp: " + currentWeatherResult.daily[i + 1].temp.day + " F";
     cardTemp.classList.add("card-text");
 
     let cardWind = document.createElement("p");
-    cardWind.textContent = "Wind: " + currentWeatherResult.daily[i+1].wind_speed + " mph";
+    cardWind.textContent = "Wind: " + currentWeatherResult.daily[i + 1].wind_speed + " mph";
     cardWind.classList.add("card-text");
 
     let cardHumidity = document.createElement("p");
-    cardHumidity.textContent = "Humidity: " + currentWeatherResult.daily[i+1].humidity + "%";
+    cardHumidity.textContent = "Humidity: " + currentWeatherResult.daily[i + 1].humidity + "%";
     cardHumidity.classList.add("card-text");
 
-    cardBody.append(cardDate, cardTemp, cardWind, cardHumidity);
+    cardBody.append(cardDateEl, cardTemp, cardWind, cardHumidity);
     forecastEl.append(cardBody);
     forecastDiv.append(forecastEl);
     forecastRow.append(forecastDiv);
-    
+
   }
 };
