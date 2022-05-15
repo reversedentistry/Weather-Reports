@@ -16,13 +16,12 @@ function callWeatherApi() {
 
   fetch(coordinateUrl)
     .then(function (response) {
-      // Add modal to alert user if city name cannot be found 
-      if (!response.ok) {
-        return;
-      }
       return response.json();
     })
     .then(function (data) {
+      if (data.length == 0) {
+        return alert("Your search could not be found. Please try again."); 
+      }
       console.log(data);
       let lat = data[0].lat
       let long = data[0].lon
@@ -37,7 +36,6 @@ function callWeatherApi() {
           return response.json()
         })
         .then(function (data) {
-          // display results on page SOMEHOW
           printResults(data);
 
         })
@@ -46,6 +44,7 @@ function callWeatherApi() {
 
 };
 
+// Display city exactly as it appears in API to compensate for any user input discrepancies
 function displayCityName(name) {
   currentWeatherBody.innerHTML = "";
   let cityNameEl = document.createElement("h2");
@@ -73,9 +72,6 @@ function addSearchHistory(name) {
 
     fetch(coordinateUrl)
     .then(function (response) {
-      if (!response.ok) {
-        return;
-      }
       return response.json();
     })
     .then(function (data) {
@@ -84,6 +80,7 @@ function addSearchHistory(name) {
       let long = data[0].lon
       let cityName = data[0].name
       displayCityName(cityName);
+      // Unlike the API call triggered by search, we do not need to add this result into our history list  
       
       let oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&exclude=hourly,minutely&appid=" + APIkey;
 
@@ -145,15 +142,15 @@ function printResults(currentWeatherResult) {
     cardDate.classList.add("card-title");
 
     let cardTemp = document.createElement("p");
-    cardTemp.textContent = currentWeatherResult.daily[i+1].temp.day + " F";
+    cardTemp.textContent = "Temp: " + currentWeatherResult.daily[i+1].temp.day + " F";
     cardTemp.classList.add("card-text");
 
     let cardWind = document.createElement("p");
-    cardWind.textContent = currentWeatherResult.daily[i+1].wind_speed + " mph";
+    cardWind.textContent = "Wind: " + currentWeatherResult.daily[i+1].wind_speed + " mph";
     cardWind.classList.add("card-text");
 
     let cardHumidity = document.createElement("p");
-    cardHumidity.textContent = currentWeatherResult.daily[i+1].humidity + "%";
+    cardHumidity.textContent = "Humidity: " + currentWeatherResult.daily[i+1].humidity + "%";
     cardHumidity.classList.add("card-text");
 
     cardBody.append(cardDate, cardTemp, cardWind, cardHumidity);
