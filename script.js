@@ -103,7 +103,7 @@ function printResults(currentWeatherResult) {
   let date = currentWeatherResult.current.dt; 
   console.log(date); 
   let dateEl = document.createElement("h3"); 
-  dateEl.textContent = moment(date).format("M/D/YYYY"); 
+  dateEl.textContent = moment(date, "X").format("M/D/YYYY"); 
   console.log(dateEl);
   
   let weatherIcon = currentWeatherResult.current.weather[0].icon;
@@ -148,7 +148,7 @@ function printResults(currentWeatherResult) {
     cardBody.classList.add("card-body");
     let cardDate = currentWeatherResult.daily[i + 1].dt; 
     let cardDateEl = document.createElement("h5");
-    cardDateEl.textContent = moment(cardDate).format("M/D/YYYY");
+    cardDateEl.textContent = moment(cardDate, "X").format("M/D/YYYY");
     cardDateEl.classList.add("card-title");
 
     let cardTemp = document.createElement("p");
