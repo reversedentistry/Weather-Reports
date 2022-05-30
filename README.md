@@ -13,7 +13,16 @@ This app draws its weather data from OpenWeather's server-side weather APIs, whi
 - Moment.js 
 
 ### Page Image
-![Screenshot of final page](./assets/screenshot1.PNG)
+![Screenshot of final page](./assets/images/screenshot1.PNG)
+![Second screenshot of final page](./assets/images/screenshot2.png)
 
 ### Final Github Link
 [Link to the final page through Github](https://reversedentistry.github.io/Weather-Reports/)
+
+### Author
+**Sheryl Hu**
+- Email: sherylhu@proton.me
+
+### License
+Copyright (c) 2022 Sheryl Hu.
+This project is MIT licensed.
