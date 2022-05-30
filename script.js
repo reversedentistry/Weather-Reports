@@ -1,5 +1,6 @@
 var APIkey = "cc11cb432484c7170f84edd3a05552d8";
 
+var searchEl = document.querySelector("#location-search");
 var searchBtn = document.querySelector("#search-btn");
 
 var searchHistory = document.querySelector("#search-history");
@@ -7,6 +8,11 @@ var currentWeatherBody = document.querySelector(".card-body");
 var fiveDayForecast = document.querySelector("#five-day-forecast");
 
 searchBtn.addEventListener("click", callWeatherApi);
+searchEl.addEventListener("keydown", function (e) {
+  if (e.key == "Enter") {
+    callWeatherApi();
+  }});
+
 
 
 function callWeatherApi() {
