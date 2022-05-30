@@ -1,0 +1,39 @@
+h1 {
+    margin-bottom: 2rem;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(183, 40, 94, 1) 40%, rgba(75, 9, 13, 1) 100%);
+    color: white; 
+}
+
+#five-day-forecast {
+    border-style: none;
+    margin-top: 2rem;
+}
+
+#five-day-forecast .card {
+    background-color: rgba(183, 40, 94, 1);
+    color: white;
+}
+
+span {
+    padding: 0.3rem 0.5rem;
+    border-radius: 10%;
+}
+
+.low {
+    background-color: rgb(62, 197, 55);
+    color: white;
+}
+
+.moderate {
+    background-color: yellow;
+}
+
+.extreme {
+    background-color: rgb(241, 74, 74);
+    color: white; 
+}
+
+#five-day-forecast {
+    margin-bottom: 5%;
+}
